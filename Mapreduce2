@@ -1,0 +1,119 @@
+Microsoft Windows [Version 10.0.22000.1219]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32>cd C:\hadoop\sbin
+
+C:\hadoop\sbin>start-all.cmd
+This script is Deprecated. Instead use start-dfs.cmd and start-yarn.cmd
+starting yarn daemons
+
+C:\hadoop\sbin>hadoop fs -mkdir /input2
+
+C:\hadoop\sbin>hadoop fs -mkdir /output2
+
+C:\hadoop\sbin>hadoop fs -copyFromLocal C:\data.txt.txt /input2
+
+C:\hadoop\sbin>hadoop fs -ls /input2
+Found 1 items
+-rw-r--r--   1 pratik supergroup         43 2022-12-06 20:49 /input2/data.txt.txt
+
+C:\hadoop\sbin>hadoop jar "C:\hadoop\share\hadoop\mapreduce\hadoop-mapreduce-examples-3.1.0.jar" wordcount /input2/data.txt.txt /output2/wordcount_3
+2022-12-06 20:53:56,685 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+2022-12-06 20:53:56,976 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/pratik/.staging/job_1670339525972_0001
+2022-12-06 20:53:57,087 INFO input.FileInputFormat: Total input files to process : 1
+2022-12-06 20:53:57,546 INFO mapreduce.JobSubmitter: number of splits:1
+2022-12-06 20:53:57,568 INFO Configuration.deprecation: yarn.resourcemanager.system-metrics-publisher.enabled is deprecated. Instead, use yarn.system-metrics-publisher.enabled
+2022-12-06 20:53:57,614 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1670339525972_0001
+2022-12-06 20:53:57,615 INFO mapreduce.JobSubmitter: Executing with tokens: []
+2022-12-06 20:53:57,714 INFO conf.Configuration: resource-types.xml not found
+2022-12-06 20:53:57,714 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
+2022-12-06 20:53:57,870 INFO impl.YarnClientImpl: Submitted application application_1670339525972_0001
+2022-12-06 20:53:57,892 INFO mapreduce.Job: The url to track the job: http://DESKTOP-T9UAO2T:8088/proxy/application_1670339525972_0001/
+2022-12-06 20:53:57,893 INFO mapreduce.Job: Running job: job_1670339525972_0001
+2022-12-06 20:54:02,983 INFO mapreduce.Job: Job job_1670339525972_0001 running in uber mode : false
+2022-12-06 20:54:02,985 INFO mapreduce.Job:  map 0% reduce 0%
+2022-12-06 20:54:07,045 INFO mapreduce.Job:  map 100% reduce 0%
+2022-12-06 20:54:11,095 INFO mapreduce.Job:  map 100% reduce 100%
+2022-12-06 20:54:11,107 INFO mapreduce.Job: Job job_1670339525972_0001 completed successfully
+2022-12-06 20:54:11,166 INFO mapreduce.Job: Counters: 53
+        File System Counters
+                FILE: Number of bytes read=62
+                FILE: Number of bytes written=427845
+                FILE: Number of read operations=0
+                FILE: Number of large read operations=0
+                FILE: Number of write operations=0
+                HDFS: Number of bytes read=149
+                HDFS: Number of bytes written=36
+                HDFS: Number of read operations=8
+                HDFS: Number of large read operations=0
+                HDFS: Number of write operations=2
+        Job Counters
+                Launched map tasks=1
+                Launched reduce tasks=1
+                Data-local map tasks=1
+                Total time spent by all maps in occupied slots (ms)=1510
+                Total time spent by all reduces in occupied slots (ms)=1710
+                Total time spent by all map tasks (ms)=1510
+                Total time spent by all reduce tasks (ms)=1710
+                Total vcore-milliseconds taken by all map tasks=1510
+                Total vcore-milliseconds taken by all reduce tasks=1710
+                Total megabyte-milliseconds taken by all map tasks=1546240
+                Total megabyte-milliseconds taken by all reduce tasks=1751040
+        Map-Reduce Framework
+                Map input records=6
+                Map output records=7
+                Map output bytes=66
+                Map output materialized bytes=62
+                Input split bytes=106
+                Combine input records=7
+                Combine output records=5
+                Reduce input groups=5
+                Reduce shuffle bytes=62
+                Reduce input records=5
+                Reduce output records=5
+                Spilled Records=10
+                Shuffled Maps =1
+                Failed Shuffles=0
+                Merged Map outputs=1
+                GC time elapsed (ms)=45
+                CPU time spent (ms)=561
+                Physical memory (bytes) snapshot=606281728
+                Virtual memory (bytes) snapshot=956944384
+                Total committed heap usage (bytes)=478150656
+                Peak Map Physical memory (bytes)=354439168
+                Peak Map Virtual memory (bytes)=529588224
+                Peak Reduce Physical memory (bytes)=251842560
+                Peak Reduce Virtual memory (bytes)=427356160
+        Shuffle Errors
+                BAD_ID=0
+                CONNECTION=0
+                IO_ERROR=0
+                WRONG_LENGTH=0
+                WRONG_MAP=0
+                WRONG_REDUCE=0
+        File Input Format Counters
+                Bytes Read=43
+        File Output Format Counters
+                Bytes Written=36
+
+C:\hadoop\sbin>hadoop fs -ls /output
+Found 1 items
+drwxr-xr-x   - pratik supergroup          0 2022-12-06 18:56 /output/wcount_output
+
+C:\hadoop\sbin>hadoop fs -ls /output2
+Found 1 items
+drwxr-xr-x   - pratik supergroup          0 2022-12-06 20:54 /output2/wordcount_3
+
+C:\hadoop\sbin>hadoop fs -ls /output2/wordcount_3
+Found 2 items
+-rw-r--r--   1 pratik supergroup          0 2022-12-06 20:54 /output2/wordcount_3/_SUCCESS
+-rw-r--r--   1 pratik supergroup         36 2022-12-06 20:54 /output2/wordcount_3/part-r-00000
+
+C:\hadoop\sbin>hadoop fs -cat /output2/wordcount_3/part-r-00000
+bye     1
+good    1
+hello   3
+hi      1
+morning 1
+
+C:\hadoop\sbin>
